@@ -7,6 +7,13 @@ const db = new pg.Client({
   password: process.env.DB_PASS,
   port: 5432,
 });
-db.connect();
+
+db.connect((err) => {
+  if (err) {
+    console.error("❌ Failed to connect to DB:", err.stack);
+  } else {
+    console.log("✅ Connected to PostgreSQL");
+  }
+});
 
 export { db };

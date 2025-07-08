@@ -1,13 +1,16 @@
+import dotenv from "dotenv";
+dotenv.config();
+
 import express from 'express';
+import cors from 'cors';
+import cookieParser from 'cookie-parser';
+
 import userRoutes from './routes/users.js';
 import postRoutes from './routes/posts.js';
 import commentRoutes from './routes/comments.js';
 import likeRoutes from './routes/likes.js';
 import authRoutes from './routes/auth.js';
-import cookieParser from 'cookie-parser';
-import cors from 'cors';
-import dotenv from "dotenv";
-dotenv.config();
+
 
 const app = express();
 const PORT = 3000;
@@ -35,7 +38,4 @@ app.get('/', (req, res) => {
     res.send('Welcome to the Social Media API');
 });
 
-// Start server
-app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
-});
+export default app;
