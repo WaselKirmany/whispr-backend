@@ -13,7 +13,6 @@ import authRoutes from './routes/auth.js';
 
 
 const app = express();
-const PORT = 3000;
 
 // Middleware
 app.use((req,res,next) => {
