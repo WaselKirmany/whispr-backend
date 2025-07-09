@@ -13,19 +13,24 @@ import authRoutes from './routes/auth.js';
 
 
 const app = express();
-app.use(express.json());
-// Middleware
-app.use((req,res,next) => {
-    res.header("Access-Control-Allow-Credentials", true);
-    next();
-});
 
+// ✅ Correct CORS setup
 app.use(cors({
-    origin: process.env.FRONTEND_URL, // Replace with your frontend URL
-    credentials: true, // Allow credentials (cookies, authorization headers, etc.)
+  origin: "https://whispr-react.vercel.app",
+  credentials: true
 }));
 
+app.use(express.json());
 app.use(cookieParser());
+
+// ✅ Optional CORS debug logging
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "https://whispr-react.vercel.app");
+  res.header("Access-Control-Allow-Credentials", "true");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+  next();
+});
 
 // Routes
 app.use("/api/posts", postRoutes);
