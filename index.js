@@ -15,9 +15,15 @@ import authRoutes from './routes/auth.js';
 const app = express();
 
 // Middleware
-app.use((req,res,next) => {
-    res.header("Access-Control-Allow-Credentials", true);
-    next();
+// app.use((req,res,next) => {
+//     res.header("Access-Control-Allow-Credentials", true);
+//     next();
+// });
+app.use((req, res, next) => {
+  res.setHeader('Access-Control-Allow-Origin', 'https://whispr-react.vercel.app');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE'); // Add allowed methods
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization'); // Add allowed headers
+  next();
 });
 app.use(express.json());
 app.use(cors({
