@@ -13,6 +13,7 @@ import authRoutes from './routes/auth.js';
 
 
 const app = express();
+console.log("🔵 Starting server...");
 
 // ✅ Correct CORS setup
 app.use(cors({
