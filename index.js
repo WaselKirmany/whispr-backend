@@ -21,19 +21,9 @@ app.use((req,res,next) => {
 });
 
 app.use(cors({
-    origin: process.env.FRONTEND_URL, // Replace with your frontend URL
+    origin: "https://whispr-react.vercel.app", // Replace with your frontend URL
     credentials: true, // Allow credentials (cookies, authorization headers, etc.)
 }));
-
-
-
-// app.use(cors({
-//   origin: process.env.FRONTEND_URL,
-//   credentials: true
-// }));
-// app.options('*', cors()); // To handle preflight requests
-
-
 
 app.use(cookieParser());
 
