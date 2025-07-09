@@ -31,6 +31,10 @@ export const register = (req, res) => {
 
 
 export const login = (req, res) => {
+
+    console.log("🔵 /api/auth/login route hit");
+    console.log("🟡 Request body:", req.body);
+
     const q= 'SELECT * FROM users WHERE username = $1';
     db.query(q, [req.body.username], (err, result) => {
         if (err) return res.status(500).json(err);
