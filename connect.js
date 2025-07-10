@@ -21,4 +21,4 @@ db.connect((err) => {
   }
 });
 
-export { db };
+export default { db };
