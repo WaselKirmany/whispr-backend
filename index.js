@@ -32,6 +32,7 @@ app.use('/api/auth', authRoutes);
 
 app.get('/', (req, res) => {
     res.send('Welcome to the Social Media API');
+    console.log("🔵 Starting server...");
 });
 
 // app.listen(3000, () => {
