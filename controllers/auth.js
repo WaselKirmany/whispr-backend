@@ -1,4 +1,4 @@
-import pool from '../connect.js';
+import db from '../connect.js';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 
@@ -7,7 +7,7 @@ export const register = (req, res) => {
   console.log("🟡 Request body:", req.body);
 
   const q = 'SELECT * FROM users WHERE username = $1';
-  pool.query(q, [req.body.username], (err, result) => {
+  db.query(q, [req.body.username], (err, result) => {
     if (err) return res.status(500).json(err);
     if (result.rows.length) return res.status(409).json('User Already Exists');
 
@@ -18,7 +18,7 @@ export const register = (req, res) => {
     const insertQuery = 'INSERT INTO users(username, email, password, profilePic) VALUES ($1, $2, $3, $4)';
     const values = [req.body.username, req.body.email, hashedPassword, dp];
 
-    pool.query(insertQuery, values, (err) => {
+    db.query(insertQuery, values, (err) => {
       if (err) return res.status(500).json(err);
       return res.status(200).json('User has been created.');
     });
@@ -30,7 +30,7 @@ export const login = (req, res) => {
   console.log("🟡 Request body:", req.body);
 
   const q = 'SELECT * FROM users WHERE username = $1';
-  pool.query(q, [req.body.username], (err, result) => {
+  db.query(q, [req.body.username], (err, result) => {
     if (err) return res.status(500).json(err);
     if (result.rows.length === 0) return res.status(404).json('User Not Found');
 

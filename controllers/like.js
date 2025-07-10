@@ -1,11 +1,11 @@
-import pool from "../connect.js";
+import { db } from "../connect.js";
 import jwt from "jsonwebtoken";
 
 export const getLikeCount = (req, res) => {
   const postId = req.params.postId;
 
   const q = "SELECT COUNT(*) FROM likes WHERE postId = $1";
-  pool.query(q, [postId], (err, data) => {
+  db.query(q, [postId], (err, data) => {
     if (err) return res.status(500).json(err);
     res.status(200).json({ count: parseInt(data.rows[0].count) });
   });
@@ -28,7 +28,7 @@ export const addLike = (req, res) => {
     `;
     const values = [userInfo.id, req.body.postId];
 
-    pool.query(q, values, (err) => {
+    db.query(q, values, (err) => {
       if (err) return res.status(500).json(err);
       res.status(200).json("Post liked");
     });
@@ -45,7 +45,7 @@ export const removeLike = (req, res) => {
     if (err) return res.status(403).json("Token invalid");
 
     const q = "DELETE FROM likes WHERE userId = $1 AND postId = $2";
-    pool.query(q, [userInfo.id, req.params.postId], (err) => {
+    db.query(q, [userInfo.id, req.params.postId], (err) => {
       if (err) return res.status(500).json(err);
       res.status(200).json("Like removed");
     });
@@ -62,7 +62,7 @@ export const hasLiked = (req, res) => {
     if (err) return res.status(403).json("Token invalid");
 
     const q = "SELECT * FROM likes WHERE userId = $1 AND postId = $2";
-    pool.query(q, [userInfo.id, req.query.postId], (err, data) => {
+    db.query(q, [userInfo.id, req.query.postId], (err, data) => {
       if (err) return res.status(500).json(err);
       return res.status(200).json(data.rows.length > 0); // true or false
     });

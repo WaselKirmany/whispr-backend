@@ -1,24 +1,24 @@
 import dotenv from "dotenv";
-dotenv.config();
+dotenv.config(); // 🔥 Must stay at the top
 
 import pg from "pg";
-const { Pool } = pg;
+const { Client } = pg;
 
 console.log("🌐 DATABASE_URL:", process.env.DATABASE_URL);
 
-const pool = new Pool({
+const db = new Client({
   connectionString: process.env.DATABASE_URL,
   ssl: {
-    rejectUnauthorized: false,
+    rejectUnauthorized: false, // Supabase requires this
   },
 });
 
-pool.on("connect", () => {
-  console.log("✅ Pool connected to Supabase PostgreSQL");
+db.connect((err) => {
+  if (err) {
+    console.error("❌ Failed to connect to DB:", err.stack);
+  } else {
+    console.log("✅ Connected to Supabase PostgreSQL");
+  }
 });
 
-pool.on("error", (err) => {
-  console.error("❌ Pool error:", err.stack);
-});
-
-export default pool;
+export { db };
