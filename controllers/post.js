@@ -1,5 +1,5 @@
 import jwt from "jsonwebtoken";
-import { db } from "../connect.js";
+import pool from "../connect.js";
 
 export const getPosts = (req, res) => {
   const userId = req.user.id; // ✅ Already decoded by verifyToken
@@ -11,7 +11,7 @@ export const getPosts = (req, res) => {
     ORDER BY p.created_at DESC
   `;
 
-  db.query(q, (err, data) => {
+  pool.query(q, (err, data) => {
     if (err) {
       console.error("Database error in getPosts:", err);
       return res.status(500).json(err);
@@ -37,9 +37,9 @@ export const createPost = (req, res) => {
 
   const values = [title, description, userId];
 
-  db.query(q, values, (err, result) => {
+  pool.query(q, values, (err, result) => {
     if (err) {
-      console.error("DB error in createPost:", err);
+      console.error("pool error in createPost:", err);
       return res.status(500).json(err);
     }
 
@@ -58,7 +58,7 @@ export const getSinglePost = (req, res) => {
     WHERE p.id = $1
   `;
 
-  db.query(q, [postId], (err, data) => {
+  pool.query(q, [postId], (err, data) => {
     if (err) {
       console.error("Error fetching post:", err);
       return res.status(500).json(err);
@@ -83,7 +83,7 @@ export const getPostsByUsername = (req, res) => {
     ORDER BY p.created_at DESC
   `;
 
-  db.query(q, [username], (err, data) => {
+  pool.query(q, [username], (err, data) => {
     if (err) return res.status(500).json(err);
     return res.status(200).json(data.rows);
   });
@@ -106,7 +106,7 @@ export const getTopLikedPosts = (req, res) => {
     LIMIT 5
   `;
 
-  db.query(q, [], (err, data) => {
+  pool.query(q, [], (err, data) => {
     if (err) {
       console.error("Error fetching top-liked posts:", err);
       return res.status(500).json("Internal Server Error");

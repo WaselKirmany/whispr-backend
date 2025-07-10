@@ -1,5 +1,5 @@
 import jwt from "jsonwebtoken";
-import { db } from "../connect.js";
+import pool from "../connect.js";
 
 export const getComments = (req, res) => {
   console.log("🔵 /api/comments/GET route hit");
@@ -15,7 +15,7 @@ export const getComments = (req, res) => {
     ORDER BY c.created_at DESC
   `;
 
-  db.query(q, [postId], (err, data) => {
+  pool.query(q, [postId], (err, data) => {
     if (err) {
       console.error("Error fetching comments:", err);
       return res.status(500).json(err);
@@ -38,7 +38,7 @@ export const addComment = (req, res) => {
     const q = "INSERT INTO comments (description, userid, postid) VALUES ($1, $2, $3)";
     // const values = [req.body.description, userInfo.id, req.body.postId];
     const values = [req.body.comment, userInfo.id, req.body.postId];
-    db.query(q, values, (err, data) => {
+    pool.query(q, values, (err, data) => {
       if (err) return res.status(500).json(err);
       res.status(200).json("Comment added");
     });
