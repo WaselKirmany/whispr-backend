@@ -4,6 +4,8 @@ import jwt from 'jsonwebtoken';
 
 
 export const register = (req, res) => {
+  console.log("🔵 /api/auth/register route hit");
+  console.log("🟡 Request body:", req.body);
   const q = 'SELECT * FROM users WHERE username = $1';
 
   db.query(q, [req.body.username], (err, result) => {
