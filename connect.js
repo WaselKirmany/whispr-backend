@@ -6,7 +6,7 @@ const { Client } = pg;
 
 console.log("🌐 DATABASE_URL:", process.env.DATABASE_URL);
 
-const db = new Client({
+export const db = new Client({
   connectionString: process.env.DATABASE_URL,
   ssl: {
     rejectUnauthorized: false, // Supabase requires this
@@ -20,5 +20,3 @@ db.connect((err) => {
     console.log("✅ Connected to Supabase PostgreSQL");
   }
 });
-
-export default { db };
