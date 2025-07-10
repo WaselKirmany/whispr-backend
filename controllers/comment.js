@@ -2,7 +2,7 @@ import jwt from "jsonwebtoken";
 import { db } from "../connect.js";
 
 export const getComments = (req, res) => {
-  console.log("🔵 /api/comments/add route hit");
+  console.log("🔵 /api/comments/GET route hit");
   const postId = req.params.postId;
 
   if (!postId) return res.status(400).json("Post ID is required");
@@ -27,7 +27,9 @@ export const getComments = (req, res) => {
 
 export const addComment = (req, res) => {
   console.log("🔵 /api/comments/ route hit");
-  const token = req.cookies.accessToken;
+  // const token = req.cookies.accessToken;
+  const authHeader = req.headers.authorization;
+  const token = authHeader && authHeader.split(" ")[1];
   if (!token) return res.status(401).json("Not authenticated");
 
   jwt.verify(token, "secretkey", (err, userInfo) => {

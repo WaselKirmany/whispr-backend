@@ -13,7 +13,9 @@ export const getLikeCount = (req, res) => {
 
 
 export const addLike = (req, res) => {
-  const token = req.cookies.accessToken;
+  // const token = req.cookies.accessToken;
+  const authHeader = req.headers.authorization;
+  const token = authHeader && authHeader.split(" ")[1];
   if (!token) return res.status(401).json("Not authenticated");
 
   jwt.verify(token, "secretkey", (err, userInfo) => {
@@ -34,7 +36,9 @@ export const addLike = (req, res) => {
 };
 
 export const removeLike = (req, res) => {
-  const token = req.cookies.accessToken;
+  // const token = req.cookies.accessToken;
+  const authHeader = req.headers.authorization;
+  const token = authHeader && authHeader.split(" ")[1];
   if (!token) return res.status(401).json("Not authenticated");
 
   jwt.verify(token, "secretkey", (err, userInfo) => {
@@ -49,7 +53,9 @@ export const removeLike = (req, res) => {
 };
 
 export const hasLiked = (req, res) => {
-  const token = req.cookies.accessToken;
+  // const token = req.cookies.accessToken;
+  const authHeader = req.headers.authorization;
+  const token = authHeader && authHeader.split(" ")[1];
   if (!token) return res.status(401).json("Not authenticated");
 
   jwt.verify(token, "secretkey", (err, userInfo) => {
