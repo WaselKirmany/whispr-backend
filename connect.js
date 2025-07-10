@@ -4,6 +4,8 @@ dotenv.config(); // 🔥 Must stay at the top
 import pg from "pg";
 const { Client } = pg;
 
+console.log("🌐 DATABASE_URL:", process.env.DATABASE_URL);
+
 const db = new Client({
   connectionString: process.env.DATABASE_URL,
   ssl: {
